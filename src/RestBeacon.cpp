@@ -11,6 +11,10 @@ void RestBeacon::onMessage(MessageCallback cb) {
     _messageCallback = cb;
 }
 
+void RestBeacon::onDiscovery(DiscoveryCallback cb) {
+    _discoveryCallback = cb;
+}
+
 void RestBeacon::begin() {
     _server.on("/message", HTTP_POST, [this]() { handleHttpMessage(); });
     _server.begin();
@@ -54,8 +58,8 @@ void RestBeacon::listenForBroadcast() {
     incoming[len] = '\0';
 
     if (String(incoming) == "WHO_IS_THERE") {
-        sendDiscoveryResponse(_udp.remoteIP(), _udp.remotePort());
+        if (_discoveryCallback) {
+            _discoveryCallback();
+        }
     }
 }
-
-void RestBeacon::sendDiscoveryResponse(IPAddress remoteIP, uint16_t remotePort) {}
