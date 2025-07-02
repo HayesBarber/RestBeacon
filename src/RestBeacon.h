@@ -1,6 +1,7 @@
 #ifndef REST_BEACON_H
 #define REST_BEACON_H
 
+#include "Message.h"
 #include <WebServer.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
@@ -8,7 +9,7 @@
 
 class RestBeacon {
 public:
-    using MessageCallback = std::function<void(const String&)>;
+    using MessageCallback = std::function<void(const Message&)>;
     using DiscoveryCallback = std::function<void()>;
 
     RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210);
