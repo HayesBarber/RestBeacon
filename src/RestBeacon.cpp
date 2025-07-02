@@ -1,10 +1,7 @@
 #ifndef REST_BEACON_H
 #define REST_BEACON_H
 
-#include <WiFi.h>
-#include <WiFiUdp.h>
 #include <WebServer.h>
-#include <functional>
 
 class RestBeacon {
 public:
