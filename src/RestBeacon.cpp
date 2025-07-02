@@ -1,4 +1,5 @@
 #include "RestBeacon.h"
+#include <ArduinoJson.h>
 
 RestBeacon::RestBeacon(uint16_t httpPort, uint16_t udpPort)
     : _server(httpPort), _udpPort(udpPort), _deviceName("RestBeacon") {}
@@ -40,8 +41,22 @@ void RestBeacon::handleHttpMessage() {
         return;
     }
 
+    StaticJsonDocument<512> doc;
+    DeserializationError err = deserializeJson(doc, body);
+    if (err) {
+        _server.send(400, "text/plain", "Invalid JSON");
+        return;
+    }
+
+    Message msg;
+
+    for (JsonPair kv : doc.as<JsonObject>()) {
+        String key = kv.key().c_str();
+        msg.addProperty(key, kv.value().as<String>());
+    }
+
     if (_messageCallback) {
-        _messageCallback(body);
+        _messageCallback(msg);
     }
 
     _server.send(200, "text/plain", "OK");
