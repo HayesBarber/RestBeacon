@@ -1,0 +1,17 @@
+{
+  "name": "RestBeacon",
+  "version": "0.1.0",
+  "description": "A simple REST + UDP broadcast server for ESP32",
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HayesBarber/RestBeacon.git"
+  },
+  "dependencies": [
+    {
+      "name": "ArduinoJson",
+      "version": "^7.4.2"
+    }
+  ]
+}
