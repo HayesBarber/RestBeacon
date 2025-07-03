@@ -56,9 +56,9 @@ void RestBeacon::handleHttpMessage() {
         msg.addProperty(key, kv.value().as<String>());
     }
 
-    _messageCallback(msg);
+    String reply = _messageCallback(msg);
 
-    _server.send(200, "text/plain", "OK");
+    _server.send(200, "text/plain", reply);
 }
 
 void RestBeacon::listenForBroadcast() {
