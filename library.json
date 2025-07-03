@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A simple REST + UDP broadcast server for ESP32",
   "frameworks": "arduino",
+  "license": "MIT",
   "platforms": "espressif32",
   "repository": {
     "type": "git",
