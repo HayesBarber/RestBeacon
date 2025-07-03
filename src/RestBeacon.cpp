@@ -29,6 +29,11 @@ void RestBeacon::loop() {
 }
 
 void RestBeacon::handleHttpMessage() {
+    if (!_messageCallback) {
+        _server.send(404, "text/plain", "No method");
+        return;
+    }
+
     if (_server.method() != HTTP_POST) {
         _server.send(405, "text/plain", "Method Not Allowed");
         return;
@@ -55,14 +60,14 @@ void RestBeacon::handleHttpMessage() {
         msg.addProperty(key, kv.value().as<String>());
     }
 
-    if (_messageCallback) {
-        _messageCallback(msg);
-    }
+    _messageCallback(msg);
 
     _server.send(200, "text/plain", "OK");
 }
 
 void RestBeacon::listenForBroadcast() {
+    if (!_discoveryCallback) return;
+
     int packetSize = _udp.parsePacket();
     if (packetSize <= 0) return;
 
@@ -73,8 +78,6 @@ void RestBeacon::listenForBroadcast() {
     incoming[len] = '\0';
 
     if (String(incoming) == "WHO_IS_THERE") {
-        if (_discoveryCallback) {
-            _discoveryCallback(_udp.remoteIP(), _udp.remotePort());
-        }
+        _discoveryCallback(_udp.remoteIP(), _udp.remotePort());
     }
 }
