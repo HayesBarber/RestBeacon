@@ -74,7 +74,7 @@ void RestBeacon::listenForBroadcast() {
 
     if (String(incoming) == "WHO_IS_THERE") {
         if (_discoveryCallback) {
-            _discoveryCallback();
+            _discoveryCallback(_udp.remoteIP(), _udp.remotePort());
         }
     }
 }
