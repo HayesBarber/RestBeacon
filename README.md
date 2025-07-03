@@ -25,6 +25,7 @@ void setup() {
   beacon.onMessage([](const Message& msg) {
     Serial.println("Got a message!");
     Serial.println(msg.getProperty("hello"));
+    return "OK";
   });
 
   beacon.onDiscovery([](IPAddress sender, uint16_t port) {

@@ -17,7 +17,7 @@
  */
 class RestBeacon {
 public:
-    using MessageCallback = std::function<void(const Message&)>;
+    using MessageCallback = std::function<String(const Message&)>;
     using DiscoveryCallback = std::function<void(IPAddress, uint16_t)>;
 
     /**
@@ -44,7 +44,7 @@ public:
 
     /**
      * @brief Registers a callback to handle incoming HTTP POST requests on the /message endpoint.
-     * @param cb The callback to invoke when a valid message is received.
+     * @param cb The callback to invoke when a valid message is received, returning a string response to the request.
      */
     void onMessage(MessageCallback cb);
 
