@@ -42,7 +42,7 @@ void RestBeacon::handleHttpMessage() {
         return;
     }
 
-    StaticJsonDocument<512> doc;
+    JsonDocument doc;
     DeserializationError err = deserializeJson(doc, body);
     if (err) {
         _server.send(400, "text/plain", "Invalid JSON");
