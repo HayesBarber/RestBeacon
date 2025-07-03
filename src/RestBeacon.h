@@ -10,7 +10,7 @@
 class RestBeacon {
 public:
     using MessageCallback = std::function<void(const Message&)>;
-    using DiscoveryCallback = std::function<void()>;
+    using DiscoveryCallback = std::function<void(IPAddress, uint16_t)>;
 
     RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210);
 
@@ -19,7 +19,6 @@ public:
 
     void onMessage(MessageCallback cb);
     void onDiscovery(DiscoveryCallback cb);
-    void setDeviceName(const String& name);
 
 private:
     WebServer _server;
@@ -27,7 +26,6 @@ private:
     MessageCallback _messageCallback;
     DiscoveryCallback _discoveryCallback;
 
-    String _deviceName;
     uint16_t _udpPort;
 
     void handleHttpMessage();
