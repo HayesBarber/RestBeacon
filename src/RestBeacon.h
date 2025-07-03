@@ -19,7 +19,6 @@ public:
 
     void onMessage(MessageCallback cb);
     void onDiscovery(DiscoveryCallback cb);
-    void setDeviceName(const String& name);
 
 private:
     WebServer _server;
@@ -27,7 +26,6 @@ private:
     MessageCallback _messageCallback;
     DiscoveryCallback _discoveryCallback;
 
-    String _deviceName;
     uint16_t _udpPort;
 
     void handleHttpMessage();

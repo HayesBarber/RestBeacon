@@ -2,11 +2,7 @@
 #include <ArduinoJson.h>
 
 RestBeacon::RestBeacon(uint16_t httpPort, uint16_t udpPort)
-    : _server(httpPort), _udpPort(udpPort), _deviceName("RestBeacon") {}
-
-void RestBeacon::setDeviceName(const String& name) {
-    _deviceName = name;
-}
+    : _server(httpPort), _udpPort(udpPort) {}
 
 void RestBeacon::onMessage(MessageCallback cb) {
     _messageCallback = cb;
