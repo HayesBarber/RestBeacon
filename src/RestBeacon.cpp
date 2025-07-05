@@ -13,10 +13,20 @@ void RestBeacon::onDiscovery(DiscoveryCallback cb) {
 }
 
 void RestBeacon::begin() {
-    _server.on("/message", HTTP_POST, [this]() { handleHttpMessage(); });
-    _server.begin();
+    if (_messageCallback) {
+        Serial.println("[RestBeacon] Starting HTTP server...");
+        _server.on("/message", HTTP_POST, [this]() { handleHttpMessage(); });
+        _server.begin();
+    } else {
+        Serial.println("[RestBeacon] HTTP server not started (no message callback set).");
+    }
 
-    _udp.begin(_udpPort);
+    if (_discoveryCallback) {
+        Serial.println("[RestBeacon] Starting UDP listener...");
+        _udp.begin(_udpPort);
+    } else {
+        Serial.println("[RestBeacon] UDP listener not started (no discovery callback set).");
+    }
 }
 
 void RestBeacon::loop() {
