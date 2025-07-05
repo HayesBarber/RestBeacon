@@ -65,6 +65,7 @@ private:
 
     void handleHttpMessage();
     void listenForBroadcast();
+    void listenForMessage();
 };
 
 #endif

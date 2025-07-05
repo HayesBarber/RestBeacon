@@ -30,7 +30,7 @@ void RestBeacon::begin() {
 }
 
 void RestBeacon::loop() {
-    _server.handleClient();
+    listenForMessage();
     listenForBroadcast();
 }
 
@@ -69,6 +69,11 @@ void RestBeacon::handleHttpMessage() {
     String reply = _messageCallback(msg);
 
     _server.send(200, "text/plain", reply);
+}
+
+void RestBeacon::listenForMessage() {
+    if (!_messageCallback) return;
+    _server.handleClient();
 }
 
 void RestBeacon::listenForBroadcast() {
