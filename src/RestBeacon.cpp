@@ -2,7 +2,7 @@
 #include <ArduinoJson.h>
 
 RestBeacon::RestBeacon(uint16_t httpPort, uint16_t udpPort)
-    : _server(httpPort), _udpPort(udpPort) {}
+    : _server(httpPort), _udpPort(udpPort), _httpPort(httpPort) {}
 
 void RestBeacon::onMessage(MessageCallback cb) {
     _messageCallback = cb;
@@ -14,7 +14,7 @@ void RestBeacon::onDiscovery(DiscoveryCallback cb) {
 
 void RestBeacon::begin() {
     if (_messageCallback) {
-        Serial.println("[RestBeacon] Starting HTTP server...");
+        Serial.printf("[RestBeacon] Starting HTTP server on port %u...\n", _httpPort);
         _server.on("/message", HTTP_POST, [this]() { handleHttpMessage(); });
         _server.begin();
     } else {
@@ -22,7 +22,7 @@ void RestBeacon::begin() {
     }
 
     if (_discoveryCallback) {
-        Serial.println("[RestBeacon] Starting UDP listener...");
+        Serial.printf("[RestBeacon] Starting UDP listener on port %u...\n", _udpPort);
         _udp.begin(_udpPort);
     } else {
         Serial.println("[RestBeacon] UDP listener not started (no discovery callback set).");

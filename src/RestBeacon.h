@@ -62,6 +62,7 @@ private:
     DiscoveryCallback _discoveryCallback;
 
     uint16_t _udpPort;
+    uint16_t _httpPort;
 
     void handleHttpMessage();
     void listenForBroadcast();
