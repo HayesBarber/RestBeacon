@@ -2,6 +2,7 @@
 #define REST_BEACON_H
 
 #include "Message.h"
+#include <Arduino.h>
 #include <WebServer.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
@@ -24,8 +25,9 @@ public:
      * @brief Constructs a RestBeacon server.
      * @param httpPort The HTTP port to listen on for POST messages.
      * @param udpPort The UDP port to listen on for discovery broadcasts.
+     * @param discoveryPassphrase The passphrase that triggers the discovery callback when received via UDP.
      */
-    RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210);
+    RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210, String discoveryPassphrase = "WHO_IS_THERE");
 
     /**
      * @brief Starts the HTTP server and UDP listener.
@@ -60,6 +62,7 @@ private:
     WiFiUDP _udp;
     MessageCallback _messageCallback;
     DiscoveryCallback _discoveryCallback;
+    String _discoveryPassphrase;
 
     uint16_t _udpPort;
     uint16_t _httpPort;

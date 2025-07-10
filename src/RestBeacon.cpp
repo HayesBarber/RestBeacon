@@ -1,8 +1,8 @@
 #include "RestBeacon.h"
 #include <ArduinoJson.h>
 
-RestBeacon::RestBeacon(uint16_t httpPort, uint16_t udpPort)
-    : _server(httpPort), _udpPort(udpPort), _httpPort(httpPort) {}
+RestBeacon::RestBeacon(uint16_t httpPort, uint16_t udpPort, String discoveryPassphrase)
+    : _server(httpPort), _udpPort(udpPort), _httpPort(httpPort), _discoveryPassphrase(discoveryPassphrase) {}
 
 void RestBeacon::onMessage(MessageCallback cb) {
     _messageCallback = cb;
@@ -88,7 +88,7 @@ void RestBeacon::listenForBroadcast() {
 
     incoming[len] = '\0';
 
-    if (String(incoming) == "WHO_IS_THERE") {
+    if (String(incoming) == _discoveryPassphrase) {
         _discoveryCallback(_udp.remoteIP(), _udp.remotePort());
     }
 }
