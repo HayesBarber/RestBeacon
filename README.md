@@ -3,13 +3,22 @@
 **RestBeacon** is a lightweight C++ library for ESP32 devices that enables two key features:
 
 - **RESTful messaging** via HTTP POST to a `/message` endpoint.
-- **UDP-based discovery**, allowing devices to respond to simple `"WHO_IS_THERE"` broadcast queries.
+- **UDP-based discovery**, allowing devices to respond to broadcast queries.
 
 ## Features
 
 - Easily handle JSON messages sent via HTTP POST
 - Respond to discovery broadcasts over UDP
 - Custom callbacks for both message handling and discovery
+- Customizable passphrase for UDP discovery
+
+## Discovery Passphrase
+
+By default, the library listens for the UDP message `"WHO_IS_THERE"`. You can override this by passing a custom passphrase to the `RestBeacon` constructor:
+
+```cpp
+RestBeacon beacon(80, 4210, "MY_DISCOVERY_KEY");
+```
 
 ## Example
 
