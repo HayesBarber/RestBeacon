@@ -45,6 +45,20 @@ public:
     void loop();
 
     /**
+     * @brief Processes only HTTP requests.
+     *
+     * Call this method in loop() if you want to handle only HTTP communication without UDP.
+     */
+    void loopHttp();
+    
+    /**
+     * @brief Processes only UDP discovery messages.
+     *
+     * Call this method in loop() if you want to handle only UDP-based discovery without HTTP.
+     */
+    void loopUdp();
+
+    /**
      * @brief Registers a callback to handle incoming HTTP POST requests on the /message endpoint.
      * @param cb The callback to invoke when a valid message is received, returning a string response to the request.
      */

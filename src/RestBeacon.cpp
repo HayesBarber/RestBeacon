@@ -34,6 +34,14 @@ void RestBeacon::loop() {
     listenForBroadcast();
 }
 
+void RestBeacon::loopHttp() {
+    listenForMessage();
+}
+
+void RestBeacon::loopUdp() {
+    listenForBroadcast();
+}
+
 void RestBeacon::handleHttpMessage() {
     if (!_messageCallback) {
         _server.send(404, "text/plain", "No method");
