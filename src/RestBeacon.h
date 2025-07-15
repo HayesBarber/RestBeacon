@@ -19,15 +19,14 @@
 class RestBeacon {
 public:
     using MessageCallback = std::function<String(const Message&)>;
-    using DiscoveryCallback = std::function<void(IPAddress, uint16_t)>;
+    using DiscoveryCallback = std::function<void(IPAddress, uint16_t, const String&)>;
 
     /**
      * @brief Constructs a RestBeacon server.
      * @param httpPort The HTTP port to listen on for POST messages.
      * @param udpPort The UDP port to listen on for discovery broadcasts.
-     * @param discoveryPassphrase The passphrase that triggers the discovery callback when received via UDP.
      */
-    RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210, String discoveryPassphrase = "WHO_IS_THERE");
+    RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210);
 
     /**
      * @brief Starts the HTTP server and UDP listener.
@@ -67,7 +66,7 @@ public:
 
     /**
      * @brief Registers a callback to handle UDP discovery messages.
-     * @param cb The callback to invoke when a WHO_IS_THERE message is received. Receives the sender's IP address and port as parameters.
+     * @param cb The callback to invoke when a message is received. Receives the sender's IP address, port, and the message as parameters.
      */
     void onDiscovery(DiscoveryCallback cb);
 
@@ -76,7 +75,6 @@ private:
     WiFiUDP _udp;
     MessageCallback _messageCallback;
     DiscoveryCallback _discoveryCallback;
-    String _discoveryPassphrase;
 
     uint16_t _udpPort;
     uint16_t _httpPort;

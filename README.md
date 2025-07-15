@@ -10,15 +10,6 @@
 - Easily handle JSON messages sent via HTTP POST
 - Respond to discovery broadcasts over UDP
 - Custom callbacks for both message handling and discovery
-- Customizable passphrase for UDP discovery
-
-## Discovery Passphrase
-
-By default, the library listens for the UDP message `"WHO_IS_THERE"`. You can override this by passing a custom passphrase to the `RestBeacon` constructor:
-
-```cpp
-RestBeacon beacon(80, 4210, "MY_DISCOVERY_KEY");
-```
 
 ## Example
 
@@ -37,9 +28,11 @@ void setup() {
     return "OK";
   });
 
-  beacon.onDiscovery([](IPAddress sender, uint16_t port) {
+  beacon.onDiscovery([](IPAddress sender, uint16_t port, const String& message) {
     Serial.print("Discovery from: ");
-    Serial.println(sender);
+    Serial.print(sender);
+    Serial.print(" with message: ");
+    Serial.println(message);
   });
 
   beacon.begin();
