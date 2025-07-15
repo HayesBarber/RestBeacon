@@ -25,7 +25,6 @@ public:
      * @brief Constructs a RestBeacon server.
      * @param httpPort The HTTP port to listen on for POST messages.
      * @param udpPort The UDP port to listen on for discovery broadcasts.
-     * @param discoveryPassphrase The passphrase that triggers the discovery callback when received via UDP.
      */
     RestBeacon(uint16_t httpPort = 80, uint16_t udpPort = 4210);
 
@@ -67,7 +66,7 @@ public:
 
     /**
      * @brief Registers a callback to handle UDP discovery messages.
-     * @param cb The callback to invoke when a WHO_IS_THERE message is received. Receives the sender's IP address and port as parameters.
+     * @param cb The callback to invoke when a message is received. Receives the sender's IP address, port, and the message as parameters.
      */
     void onDiscovery(DiscoveryCallback cb);
 
