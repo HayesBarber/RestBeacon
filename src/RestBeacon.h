@@ -19,7 +19,7 @@
 class RestBeacon {
 public:
     using MessageCallback = std::function<String(const Message&)>;
-    using DiscoveryCallback = std::function<void(IPAddress, uint16_t, String)>;
+    using DiscoveryCallback = std::function<void(IPAddress, uint16_t, const String&)>;
 
     /**
      * @brief Constructs a RestBeacon server.
