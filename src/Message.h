@@ -30,17 +30,15 @@ struct Message {
     return json;
   }
 
-  static Message fromJson(const String &jsonStr) {
-    Message msg;
+  static bool fromJson(const String &jsonStr, Message &outMsg) {
     JsonDocument doc;
     DeserializationError err = deserializeJson(doc, jsonStr);
     if (err) {
-      return msg;
+      return false;
     }
     for (JsonPair kv : doc.as<JsonObject>()) {
-      String key = kv.key().c_str();
-      msg.addProperty(key, kv.value().as<String>());
+      outMsg.addProperty(kv.key().c_str(), kv.value().as<String>());
     }
-    return msg;
+    return true;
   }
 };

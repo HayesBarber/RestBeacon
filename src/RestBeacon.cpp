@@ -56,7 +56,11 @@ void RestBeacon::handleHttpMessage() {
     return;
   }
 
-  Message msg = Message::fromJson(body);
+  Message msg;
+  if (!Message::fromJson(body, msg)) {
+    _server.send(400, "text/plain", "Invalid JSON");
+    return;
+  }
 
   String reply = _messageCallback(msg);
 
