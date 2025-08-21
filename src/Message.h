@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <map>
+#include <vector>
 
 struct Message {
   std::map<String, String> properties;
