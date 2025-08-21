@@ -37,7 +37,17 @@ struct Message {
       return false;
     }
     for (JsonPair kv : doc.as<JsonObject>()) {
-      outMsg.addProperty(kv.key().c_str(), kv.value().as<String>());
+      if (kv.value().is<JsonArray>()) {
+        String combined;
+        for (JsonVariant elem : kv.value().as<JsonArray>()) {
+          if (!combined.isEmpty())
+            combined += ",";
+          combined += elem.as<String>();
+        }
+        outMsg.addProperty(kv.key().c_str(), combined);
+      } else {
+        outMsg.addProperty(kv.key().c_str(), kv.value().as<String>());
+      }
     }
     return true;
   }
