@@ -41,7 +41,7 @@ struct Message {
         String combined;
         for (JsonVariant elem : kv.value().as<JsonArray>()) {
           if (!combined.isEmpty())
-            combined += ",";
+            combined += "|";
           combined += elem.as<String>();
         }
         outMsg.addProperty(kv.key().c_str(), combined);
