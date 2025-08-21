@@ -16,6 +16,21 @@ struct Message {
     return it != properties.end() ? it->second : "";
   }
 
+  std::vector<String> getArrayProperty(const String &key) const {
+    std::vector<String> result;
+    String raw = getProperty(key);
+    int start = 0;
+    int idx;
+    while ((idx = raw.indexOf('|', start)) != -1) {
+      result.push_back(raw.substring(start, idx));
+      start = idx + 1;
+    }
+    if (start < raw.length()) {
+      result.push_back(raw.substring(start));
+    }
+    return result;
+  }
+
   String toJson() const {
     String json = "{";
     bool firstProperty = true;
